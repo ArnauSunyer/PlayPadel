@@ -1,0 +1,30 @@
+
+# Android Studio / IntelliJ
+.idea/
+.gradle/
+.kotlin/
+*.iml
+
+# Compilacions
+**/build/
+**/bin/
+**/obj/
+
+# Configuracio local
+**/local.properties
+.env
+.env.*
+!.env.example
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Fitxers temporals
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
+Desktop.ini
+  
