@@ -28,7 +28,7 @@ fun LoginScreen() {
     var visible by remember { mutableStateOf(false) }
 
     Column(Modifier.fillMaxSize().padding(24.dp), verticalArrangement = Arrangement.Center) {
-        Text("Benvingut", style = MaterialTheme.typography.headlineLarge)
+        Text("Benvinguts a PlayPadel", style = MaterialTheme.typography.headlineLarge)
 
         OutlinedTextField(
             value = email,
