@@ -1,5 +1,5 @@
 package com.playpadel.app.screens
-
+import com.playpadel.app.ui.theme.PlayPadelTheme
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -28,7 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.playpadel.app.R
 
-@Preview(showBackground = true)
+
 @Composable
 fun LoginScreen() {
     var email by remember { mutableStateOf("") }
@@ -62,8 +62,8 @@ fun LoginScreen() {
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                placeholder = { Text("Email") },
-                singleLine = true
+                placeholder = { Text("Email")},
+                singleLine = true,
             )
 
             OutlinedTextField(
@@ -75,12 +75,19 @@ fun LoginScreen() {
                 else PasswordVisualTransformation(),
                 trailingIcon = {
                     TextButton(onClick = { visible = !visible }) {
-                        Text(if (visible) "Amaga" else "Mostra",color = Color.White)
+                        Text(if (visible) "Amaga" else "Mostra")
                     }
                 }
             )
 
             Button(onClick = {}) { Text("Inicia sessió") }
         }
+    }
+}
+@Preview(showBackground = true)
+@Composable
+fun LoginScreenPreview() {
+    PlayPadelTheme {
+        LoginScreen()
     }
 }
