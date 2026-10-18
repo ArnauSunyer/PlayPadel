@@ -5,7 +5,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.material3.Button
@@ -55,10 +57,12 @@ fun LoginScreen() {
         )
 
         Column(
-            Modifier.fillMaxSize().systemBarsPadding().padding(24.dp),
+            Modifier.fillMaxSize().systemBarsPadding().padding(start = 60.dp, end = 24.dp, top = 140.dp, bottom = 24.dp),
             verticalArrangement = Arrangement.Center
 
-        ) {
+        )
+
+        {
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
@@ -79,6 +83,8 @@ fun LoginScreen() {
                     }
                 }
             )
+
+            Spacer(Modifier.height(24.dp))
 
             Button(onClick = {}) { Text("Inicia sessió") }
         }
