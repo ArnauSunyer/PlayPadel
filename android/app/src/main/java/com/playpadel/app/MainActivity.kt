@@ -4,14 +4,12 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import com.playpadel.app.screens.LoginScreen
+import com.playpadel.app.screens.RegisterScreen
 import com.playpadel.app.ui.theme.PlayPadelTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,10 +18,18 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             PlayPadelTheme {
-                LoginScreen()
+                var pantalla by remember { mutableStateOf("login") }
+
+                when (pantalla) {
+                    "login" -> LoginScreen(
+                        onRegister = { pantalla = "registre" }
+                    )
+                    "registre" -> RegisterScreen(
+                        onBack = { pantalla = "login" },
+                        onRegistered = { pantalla = "login" }
+                    )
                 }
             }
         }
     }
-
-
+}
