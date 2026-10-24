@@ -12,12 +12,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.systemBarsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -31,7 +29,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.playpadel.app.ui.theme.CourtBlue
@@ -65,7 +62,7 @@ fun RegisterScreen(
                 .verticalScroll(rememberScrollState())
                 .padding(horizontal = 32.dp, vertical = 24.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
+        ){
             Text(
                 "Crea el teu compte",
                 style = MaterialTheme.typography.headlineMedium,
@@ -110,29 +107,15 @@ fun RegisterScreen(
                 Text("Ja tinc compte")
             }
         }
+        FletxaEnrere(
+            onClick = onBack,
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .systemBarsPadding()
+                .padding(2.dp)
+
+        )
     }
-}
-
-@Composable
-private fun CampText(
-    valor: String,
-    alCanviar: (String) -> Unit,
-    etiqueta: String,
-    visualTransformation: VisualTransformation = VisualTransformation.None,
-    teclat: KeyboardType = KeyboardType.Text
-
-) {
-    OutlinedTextField(
-        value = valor,
-        onValueChange = alCanviar,
-        placeholder = { Text(etiqueta) },
-        singleLine = true,
-        modifier = Modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(12.dp),
-        visualTransformation = visualTransformation,
-        keyboardOptions = KeyboardOptions(keyboardType = teclat),
-
-    )
 }
 
 @Preview(showBackground = true)

@@ -41,7 +41,8 @@ import com.playpadel.app.ui.theme.PlayPadelTheme
 @Composable
 fun LoginScreen(
     onForgotPassword: () -> Unit = {},
-    onRegister: () -> Unit = {}
+    onRegister: () -> Unit = {},
+    onLogin: () -> Unit = {}
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -108,7 +109,7 @@ fun LoginScreen(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 Button(
-                    onClick = {},
+                    onClick = onLogin,
                     modifier = Modifier.weight(1f).height(52.dp),
                     shape = RoundedCornerShape(12.dp)
                 ) {
