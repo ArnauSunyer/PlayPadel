@@ -1,7 +1,9 @@
 package com.playpadel.auth;
 
+import com.playpadel.security.JwtService;
 import com.playpadel.user.User;
 import com.playpadel.user.UserRepository;
+import com.playpadel.user.UserResponse;
 import java.time.Instant;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,31 +16,49 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
-    
-    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public AuthService(UserRepository userRepository, PasswordEncoder passwordEncoder,
+                       JwtService jwtService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.jwtService = jwtService;
     }
 
     @Transactional
     public User registrar(RegisterRequest request) {
-        String email = request.email().trim().toLowerCase();
+        String email = request.getEmail().trim().toLowerCase();
 
         if (userRepository.existsByEmail(email)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Aquest email ja està registrat");
         }
 
         User user = new User();
-        user.setNom(request.nom().trim());
-        user.setCognoms(request.cognoms().trim());
+        user.setNom(request.getNom().trim());
+        user.setCognoms(request.getCognoms().trim());
         user.setEmail(email);
-        user.setTelefon(request.telefon() == null || request.telefon().isBlank()
-                ? null : request.telefon().trim());
-        user.setPasswordHash(passwordEncoder.encode(request.password()));
+        user.setTelefon(request.getTelefon() == null || request.getTelefon().isBlank()
+                ? null : request.getTelefon().trim());
+        user.setPasswordHash(passwordEncoder.encode(request.getPassword()));
         user.setPoliticaAcceptadaAt(Instant.now());
-        user.setAcceptaComunicacions(request.acceptaComunicacions());
+        user.setAcceptaComunicacions(request.isAcceptaComunicacions());
 
         return userRepository.save(user);
+    }
+
+    public AuthResponse login(LoginRequest request) {
+        String email = request.getEmail().trim().toLowerCase();
+
+        User user = userRepository.findByEmail(email)
+                .filter(u -> passwordEncoder.matches(request.getPassword(), u.getPasswordHash()))
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.UNAUTHORIZED, "Email o contrasenya incorrectes"));
+
+        if (!user.isActiu()) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Aquest compte està desactivat");
+        }
+
+        String token = jwtService.generarToken(user);
+        return new AuthResponse(token, "Bearer", jwtService.getExpiracioSegons(), UserResponse.from(user));
     }
 }
