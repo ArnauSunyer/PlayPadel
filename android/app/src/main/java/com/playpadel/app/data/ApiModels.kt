@@ -17,3 +17,14 @@ data class UserResponse(
     val email: String,
     val rol: String
 )
+data class LoginRequest(
+    val email: String,
+    val password: String
+)
+
+data class AuthResponse(
+    val token: String,
+    val tipus: String,
+    val expiraEnSegons: Long,
+    val usuari: UserResponse
+)
